@@ -8,6 +8,7 @@ public class MeuPrimeiroController {
 
 	@GetMapping("/home")
 	public String home() {
-		return "Hello World!";
+		return "Hello World 2!";
+
 	}
 }
