@@ -8,8 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		Cliente c = new Cliente("Andre","andre@email.com","85 99412536");
 		c.ativar();
-		NotificadorSMS notificador = new NotificadorSMS();
-		AtivacaoClienteService ativar = new AtivacaoClienteService(notificador);
+		AtivacaoClienteService ativar = new AtivacaoClienteService(new NotificadorSMS());
 		ativar.ativar(c);
 	}
 }

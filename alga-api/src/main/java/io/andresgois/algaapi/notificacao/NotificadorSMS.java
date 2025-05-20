@@ -2,6 +2,7 @@ package io.andresgois.algaapi.notificacao;
 
 import io.andresgois.algaapi.domain.Cliente;
 
+//@Component
 public class NotificadorSMS implements Notificador{
 
 	@Override
