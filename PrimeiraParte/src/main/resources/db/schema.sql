@@ -1,7 +1,6 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS tb_users (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id CHAR(36) PRIMARY KEY NOT NULL DEFAULT (UUID()),
     name VARCHAR(255) NOT NULL,
     age INT NOT NULL,
     password VARCHAR(255) NOT NULL,

@@ -1,7 +1,6 @@
 package br.com.primeiraparte.controller;
 
 import br.com.primeiraparte.domain.entity.User;
-import br.com.primeiraparte.domain.entity.enuns.Ativado;
 import br.com.primeiraparte.service.AtivacaoUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class UserController {
     @PostMapping("/{id}")
     public ResponseEntity salvar(@PathVariable UUID id) {
         ativacaoUserService.ativarUsuario(id);
-        return ResponseEntity.ok("Usu[ario Ativado com sucesso]");
+        return ResponseEntity.ok("Usuário Ativado com sucesso");
     }
 
     @GetMapping

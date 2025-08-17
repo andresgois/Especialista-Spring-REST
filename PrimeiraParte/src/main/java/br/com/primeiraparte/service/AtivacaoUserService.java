@@ -24,7 +24,7 @@ public class AtivacaoUserService {
     @Autowired
     private ApplicationEventPublisher eventPublisher;
 
-    public void ativar(User user) {
+    public void ativarUsuario(User user) {
         user.ativar();
         //NotificadorEmail notificadorEmail = new NotificadorEmail();
         //this.notificador.notificar(user, "Seu cadastro no sistema está ativo!");
@@ -33,7 +33,7 @@ public class AtivacaoUserService {
 
     public void ativarUsuario(UUID id) {
         User user = (User) userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        user.ativar();
+        ativarUsuario(user);
         userRepository.save(user);
     }
 

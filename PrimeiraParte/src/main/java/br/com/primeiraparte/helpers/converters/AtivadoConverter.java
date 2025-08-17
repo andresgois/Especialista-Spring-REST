@@ -1,6 +1,6 @@
 package br.com.primeiraparte.helpers.converters;
 
-import br.com.primeiraparte.domain.entity.enuns.Ativado;
+import br.com.primeiraparte.domain.enuns.Ativado;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

@@ -1,6 +1,6 @@
 package br.com.primeiraparte.domain.entity;
 
-import br.com.primeiraparte.domain.entity.enuns.Ativado;
+import br.com.primeiraparte.domain.enuns.Ativado;
 import br.com.primeiraparte.helpers.converters.AtivadoConverter;
 import jakarta.persistence.*;
 import java.util.UUID;
