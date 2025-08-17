@@ -17,7 +17,7 @@ public class UserController {
     private AtivacaoUserService ativacaoUserService;
 
     @PostMapping("/{id}")
-    public ResponseEntity salvar(@PathVariable UUID id) {
+    public ResponseEntity salvar(@PathVariable String id) {
         ativacaoUserService.ativarUsuario(id);
         return ResponseEntity.ok("Usuário Ativado com sucesso");
     }

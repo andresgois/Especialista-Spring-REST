@@ -10,9 +10,9 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue
-    @Column(columnDefinition = "UUID")
-    private UUID id;
+    @Column(columnDefinition = "CHAR(36)")
+    //private UUID id;
+    private String id;
 
     @Column(nullable = false)
     private String name;
@@ -36,19 +36,35 @@ public class User {
     // Construtores
     public User() {}
 
-    public User(String name, int age, String password, String login) {
+    @PrePersist
+    public void generateId() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
+
+    public User(String name, int age, String password) {
         this.name = name;
         this.age = age;
         this.password = password;
         this.login = login;
     }
 
+    public User(String name, int age, String password, String login,String email) {
+        this.name = name;
+        this.age = age;
+        this.password = password;
+        this.login = login;
+        this.ativado = Ativado.NAO;
+        this.email = email;
+    }
+
     // Getters e Setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -102,6 +118,10 @@ public class User {
 
     public Ativado getAtivado() {
         return ativado;
+    }
+
+    public void setAtivado(Ativado ativado) {
+        this.ativado = ativado;
     }
 }
 

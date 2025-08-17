@@ -31,7 +31,7 @@ public class AtivacaoUserService {
         eventPublisher.publishEvent(new UserAtivadorEvent(user));
     }
 
-    public void ativarUsuario(UUID id) {
+    public void ativarUsuario(String id) {
         User user = (User) userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         ativarUsuario(user);
         userRepository.save(user);
