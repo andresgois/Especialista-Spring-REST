@@ -23,7 +23,7 @@ public class Main {
         users.forEach(user -> System.out.println(user.getName()));
 
         // Cria usuário
-        User u = new User();
+        /*User u = new User();
         u.setName("bia");
         u.setAge(15);
         u.setPassword("1456988");
@@ -31,7 +31,13 @@ public class Main {
         u.setEmail("bia@email.com");
         u.setAtivado(Ativado.NAO);
 
-        User UserCriado = c.createUser(u);
-        System.out.println(UserCriado.getName());
+        User UserCriado = c.salvar(u);
+        System.out.println(UserCriado.getName());*/
+
+        User user1 = c.findByUser("15ebbe31-7b21-11f0-a116-fed138f6b576");
+        System.out.println(user1.getName());
+
+        // deleta o usuário
+        c.deleteUser("15eb67e9-7b21-11f0-a116-fed138f6b576");
     }
 }

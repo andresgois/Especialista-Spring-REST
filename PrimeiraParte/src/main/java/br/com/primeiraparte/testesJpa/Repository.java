@@ -22,8 +22,19 @@ public class Repository {
         return users;
     }
 
+    public User  findByUser(String id){
+        User user = em.find(User.class, id);
+        return user;
+    }
+
     @Transactional
-    public User createUser(User user){
+    public User salvar(User user){
         return em.merge(user);
+    }
+    @Transactional
+    public void deleteUser(String id) {
+        User user = em.find(User.class, id);
+        if(user != null)
+        em.remove(user);
     }
 }

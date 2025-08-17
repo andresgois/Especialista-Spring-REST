@@ -10,3 +10,4 @@ CREATE TABLE tb_users (
     email VARCHAR(255) NOT NULL,
     ativado VARCHAR(1) NOT NULL
 );
+
