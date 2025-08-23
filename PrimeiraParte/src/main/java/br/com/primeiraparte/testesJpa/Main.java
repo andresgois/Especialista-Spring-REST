@@ -3,6 +3,7 @@ package br.com.primeiraparte.testesJpa;
 import br.com.primeiraparte.PrimeiraParteApplication;
 import br.com.primeiraparte.domain.entity.User;
 import br.com.primeiraparte.domain.enuns.Ativado;
+import br.com.primeiraparte.domain.repository.UserRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -17,7 +18,11 @@ public class Main {
                 .web(WebApplicationType.NONE).run(args);
 
         // Lista todos
-        Repository c = context.getBean(Repository.class);
+        // Sem padrão
+        // Repository c = context.getBean(Repository.class);
+
+        // Padrão repository
+        UserRepository c = context.getBean(UserRepository.class);
         List<User> users = c.findByAllUser();
 
         users.forEach(user -> System.out.println(user.getName()));
