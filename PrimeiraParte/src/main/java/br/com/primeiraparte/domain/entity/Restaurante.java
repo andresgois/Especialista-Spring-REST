@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Table(name = "tb_restaurante")
 @Entity
 public class Restaurante {
 
