@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS tb_users;
+/*DROP TABLE IF EXISTS tb_users;
 
 CREATE TABLE tb_users (
     --id CHAR(36) PRIMARY KEY,
@@ -9,5 +9,5 @@ CREATE TABLE tb_users (
     login VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(255) NOT NULL,
     ativado VARCHAR(1) NOT NULL
-);
+);*/
 
