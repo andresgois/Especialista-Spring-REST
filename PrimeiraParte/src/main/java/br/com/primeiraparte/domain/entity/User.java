@@ -3,12 +3,18 @@ package br.com.primeiraparte.domain.entity;
 import br.com.primeiraparte.domain.enuns.Ativado;
 import br.com.primeiraparte.helpers.converters.AtivadoConverter;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_users")
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
+    @EqualsAndHashCode.Include
     @Id
     @Column(columnDefinition = "CHAR(36)")
     //private UUID id;
@@ -33,8 +39,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String login;
 
-    // Construtores
-    public User() {}
+    public User() {
+
+    }
 
     @PrePersist
     public void generateId() {
@@ -59,55 +66,6 @@ public class User {
         this.email = email;
     }
 
-    // Getters e Setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public void ativar() {
         this.ativado = Ativado.SIM;
     }
@@ -116,12 +74,5 @@ public class User {
         this.ativado = Ativado.NAO;
     }
 
-    public Ativado getAtivado() {
-        return ativado;
-    }
-
-    public void setAtivado(Ativado ativado) {
-        this.ativado = ativado;
-    }
 }
 
