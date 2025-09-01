@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tb_cozinha")
+@Table(name = "tb_cidade")
 @Entity
 public class Cidade {
 
@@ -17,9 +17,5 @@ public class Cidade {
 
     @Column(nullable = false)
     private String nome;
-
-    @ManyToOne
-    @JoinColumn(name = "estado_id",nullable = false)
-    private Estado estado;
 
 }
