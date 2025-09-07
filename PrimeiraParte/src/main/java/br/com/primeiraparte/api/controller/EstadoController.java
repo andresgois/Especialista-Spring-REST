@@ -42,9 +42,12 @@ public class EstadoController {
         headers.add(HttpHeaders.LOCATION, "http://localhost:8080/estados/" + id);
         //return ResponseEntity.ok(e);
         //return ResponseEntity.status(HttpStatus.OK).body(e);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .headers(headers)
-                .body(e);
+        if(e != null) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .headers(headers)
+                    .body(e);
+        }
+        return ResponseEntity.notFound().build();
     }
 }
