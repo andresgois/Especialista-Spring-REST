@@ -4,8 +4,10 @@ import br.com.primeiraparte.domain.EntityXml.EstadoList;
 import br.com.primeiraparte.domain.entity.Estado;
 import br.com.primeiraparte.domain.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,7 +35,16 @@ public class EstadoController {
     }
 
     @GetMapping(value = "/{id}")
-    public Estado buscar(@PathVariable Long id) {
-        return estadoRepository.buscar(id);
+    public ResponseEntity<Estado> buscar(@PathVariable Long id) {
+        //return estadoRepository.buscar(id);
+        Estado e = estadoRepository.buscar(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.LOCATION, "http://localhost:8080/estados/" + id);
+        //return ResponseEntity.ok(e);
+        //return ResponseEntity.status(HttpStatus.OK).body(e);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .headers(headers)
+                .body(e);
     }
 }
