@@ -4,11 +4,9 @@ import br.com.primeiraparte.domain.EntityXml.EstadoList;
 import br.com.primeiraparte.domain.entity.Estado;
 import br.com.primeiraparte.domain.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +25,7 @@ public class EstadoController {
         return estadoRepository.listar();
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
     public EstadoList listarXml() {
         List<Estado> lista = new ArrayList<>();
