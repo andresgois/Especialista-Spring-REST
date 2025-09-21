@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,10 +44,26 @@ public class RestauranteService {
     }
 
     public Restaurante adicionar(Long id,Restaurante restaurante) {
-        Restaurante cozinhaAtual = restauranteRepository.buscar(id);
+        Restaurante restauranteAtual = restauranteRepository.buscar(id);
         if(restaurante == null)
-            BeanUtils.copyProperties(restaurante, cozinhaAtual, "id");
-        return restauranteRepository.salvar(cozinhaAtual);
+            BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+        return restauranteRepository.salvar(restauranteAtual);
+    }
+
+    public Restaurante atualizar(Long id,Restaurante restaurante) {
+        Restaurante restauranteAtual = restauranteRepository.buscar(id);
+        if(restaurante == null)
+            throw new EntidadeNaoEncontrada(
+                    String.format("Não existe cadastro da Restaurante de código %d", id)
+            );
+        Cozinha cozinha = cozinhaRepository.buscar(restauranteAtual.getCozinha().getId());
+        if(cozinha == null) {
+            throw new EntidadeNaoEncontrada(
+                    String.format("Não existe cadastro da Cozinha de código %d", id)
+            );
+        }
+        BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+        return restauranteRepository.salvar(restauranteAtual);
     }
 
     public void deletar(Long id) {

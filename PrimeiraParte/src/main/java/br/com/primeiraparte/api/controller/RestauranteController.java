@@ -3,6 +3,7 @@ package br.com.primeiraparte.api.controller;
 import br.com.primeiraparte.domain.entity.Restaurante;
 import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
 import br.com.primeiraparte.service.RestauranteService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,15 +42,18 @@ public class RestauranteController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    /*
+
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Restaurante> adicionar(@PathVariable Long id,@RequestBody Restaurante restaurante) {
-        Restaurante restauranteAtual = restauranteService.buscar(id);
-        if(restaurante == null) return ResponseEntity.notFound().build();
-        BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
-        restauranteService.salvar(restauranteAtual);
-        return ResponseEntity.ok(restauranteAtual);
+    public ResponseEntity<?> adicionar(@PathVariable Long id,@RequestBody Restaurante restaurante) {
+        try {
+            Restaurante restauranteAtual = restauranteService.atualizar(id,  restaurante);
+            return ResponseEntity.ok(restauranteAtual);
+        } catch (EntidadeNaoEncontrada e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+    /*
+
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
