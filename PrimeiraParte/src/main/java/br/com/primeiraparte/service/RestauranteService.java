@@ -1,8 +1,10 @@
 package br.com.primeiraparte.service;
 
+import br.com.primeiraparte.domain.entity.Cozinha;
 import br.com.primeiraparte.domain.entity.Restaurante;
 import br.com.primeiraparte.domain.exception.EntidadeEmUsoException;
 import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
+import br.com.primeiraparte.domain.repository.CozinhaRepository;
 import br.com.primeiraparte.domain.repository.RestauranteRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class RestauranteService {
     @Autowired
     private RestauranteRepository restauranteRepository;
 
+    @Autowired
+    private CozinhaRepository cozinhaRepository;
+
     public List<Restaurante> listar() {
         return restauranteRepository.listar();
     }
@@ -26,6 +31,14 @@ public class RestauranteService {
     }
 
     public Restaurante salvar(Restaurante restaurante) {
+        Long id = restaurante.getCozinha().getId();
+        Cozinha cozinha = cozinhaRepository.buscar(id);
+        if(cozinha == null) {
+            throw new EntidadeNaoEncontrada(
+                    String.format("Não existe cadastro da Restaurante de código %d", id)
+            );
+        }
+        restaurante.setCozinha(cozinha);
         return restauranteRepository.salvar(restaurante);
     }
 

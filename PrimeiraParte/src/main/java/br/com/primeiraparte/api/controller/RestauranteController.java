@@ -1,14 +1,14 @@
 package br.com.primeiraparte.api.controller;
 
 import br.com.primeiraparte.domain.entity.Restaurante;
+import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
 import br.com.primeiraparte.service.RestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -31,13 +31,17 @@ public class RestauranteController {
         return ResponseEntity.ok(restaurante);
     }
 
-    /*@PostMapping
-    public ResponseEntity<Restaurante> adicionar(@RequestBody Restaurante restaurante) {
-        restauranteService.salvar(restaurante);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(restaurante.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    @PostMapping
+    public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante) {
+        try {
+            restauranteService.salvar(restaurante);
+            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(restaurante.getId()).toUri();
+            return ResponseEntity.created(uri).build();
+        } catch (EntidadeNaoEncontrada e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
+    /*
     @PutMapping(value = "/{id}")
     public ResponseEntity<Restaurante> adicionar(@PathVariable Long id,@RequestBody Restaurante restaurante) {
         Restaurante restauranteAtual = restauranteService.buscar(id);
