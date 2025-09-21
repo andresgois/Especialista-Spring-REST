@@ -1,6 +1,8 @@
 package br.com.primeiraparte.api.controller;
 
 import br.com.primeiraparte.domain.entity.Cozinha;
+import br.com.primeiraparte.domain.exception.EntidadeEmUsoException;
+import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
 import br.com.primeiraparte.domain.repository.CozinhaRepository;
 import br.com.primeiraparte.service.CozinhaService;
 import org.springframework.beans.BeanUtils;
@@ -54,7 +56,7 @@ public class CozinhaController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
-        try {
+        /*try {
             Cozinha cozinha = cozinhaService.buscar(id);
             if(cozinha == null)
                 return ResponseEntity.notFound().build();
@@ -63,6 +65,15 @@ public class CozinhaController {
             //return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();*/
+        try {
+            cozinhaService.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntidadeNaoEncontrada e) {
+            return ResponseEntity.notFound().build();
+        } catch (EntidadeEmUsoException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
     }
 }
