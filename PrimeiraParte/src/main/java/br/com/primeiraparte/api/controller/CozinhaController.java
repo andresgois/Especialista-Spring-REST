@@ -2,6 +2,7 @@ package br.com.primeiraparte.api.controller;
 
 import br.com.primeiraparte.domain.entity.Cozinha;
 import br.com.primeiraparte.domain.repository.CozinhaRepository;
+import br.com.primeiraparte.service.CozinhaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,41 +21,44 @@ import java.util.List;
 public class CozinhaController {
 
     @Autowired
-    private CozinhaRepository cozinhasRepository;
+    private CozinhaService cozinhaService;
 
     @GetMapping
     public List<Cozinha> listar() {
-        return cozinhasRepository.listar();
+        return cozinhaService.listar();
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Cozinha> buscar(@PathVariable Long id) {
-        Cozinha cozinha = cozinhasRepository.buscar(id);
+        Cozinha cozinha = cozinhaService.buscar(id);
+        if(cozinha == null)
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(cozinha);
     }
 
     @PostMapping
     public ResponseEntity<Cozinha> adicionar(@RequestBody Cozinha cozinha) {
-        cozinhasRepository.salvar(cozinha);
+        cozinhaService.salvar(cozinha);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cozinha.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Cozinha> adicionar(@PathVariable Long id,@RequestBody Cozinha cozinha) {
-        Cozinha cozinhaAtual = cozinhasRepository.buscar(id);
+        Cozinha cozinhaAtual = cozinhaService.buscar(id);
         if(cozinha == null) return ResponseEntity.notFound().build();
         BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-        cozinhasRepository.salvar(cozinhaAtual);
+        cozinhaService.salvar(cozinhaAtual);
         return ResponseEntity.ok(cozinhaAtual);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         try {
-            Cozinha cozinha = cozinhasRepository.buscar(id);
-            if(cozinha == null) return ResponseEntity.notFound().build();
-            cozinhasRepository.remover(cozinha);
+            Cozinha cozinha = cozinhaService.buscar(id);
+            if(cozinha == null)
+                return ResponseEntity.notFound().build();
+            cozinhaService.deletar(cozinha.getId());
         } catch (DataIntegrityViolationException e) {
             //return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
