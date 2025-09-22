@@ -1,10 +1,12 @@
 package br.com.primeiraparte.api.controller;
 
 import br.com.primeiraparte.domain.entity.Restaurante;
+import br.com.primeiraparte.domain.exception.EntidadeEmUsoException;
 import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
 import br.com.primeiraparte.service.RestauranteService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -52,8 +54,6 @@ public class RestauranteController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    /*
-
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
@@ -67,7 +67,7 @@ public class RestauranteController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         return ResponseEntity.noContent().build();*/
-        /*try {
+        try {
             restauranteService.deletar(id);
             return ResponseEntity.noContent().build();
         } catch (EntidadeNaoEncontrada e) {
@@ -76,5 +76,5 @@ public class RestauranteController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
-    }*/
+    }
 }
