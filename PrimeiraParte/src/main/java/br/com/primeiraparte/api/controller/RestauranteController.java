@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/restaurante")
@@ -75,6 +76,15 @@ public class RestauranteController {
         } catch (EntidadeEmUsoException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+    }
 
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<?> atualizarPacial(@PathVariable Long id,@RequestBody Map<String, Object> campos) {
+        try {
+            Restaurante restauranteAtual = restauranteService.atualizarPacial(id,   campos);
+            return ResponseEntity.ok(restauranteAtual);
+        } catch (EntidadeNaoEncontrada e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

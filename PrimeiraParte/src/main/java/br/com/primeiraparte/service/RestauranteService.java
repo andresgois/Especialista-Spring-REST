@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RestauranteService {
@@ -80,5 +81,24 @@ public class RestauranteService {
                     String.format("Restaurante de código %d não pode ser removida, pois está em uso", id)
             );
         }
+    }
+
+    public Restaurante atualizarPacial(Long id, Map<String, Object> campos) {
+        Restaurante restauranteAtual = restauranteRepository.buscar(id);
+
+        if(restauranteAtual == null)
+            throw new EntidadeNaoEncontrada(
+                    String.format("Não existe cadastro da Restaurante de código %d", id)
+            );
+        merge(campos, restauranteAtual);
+        Cozinha cozinha = cozinhaRepository.buscar(restauranteAtual.getCozinha().getId());
+        return this.atualizar(id, restauranteAtual);
+    }
+
+    private static void merge(Map<String, Object> campos, Restaurante restauranteAtual) {
+        campos.forEach((key, value) -> {
+
+            System.out.println(key+ " : " + value);
+        });
     }
 }
