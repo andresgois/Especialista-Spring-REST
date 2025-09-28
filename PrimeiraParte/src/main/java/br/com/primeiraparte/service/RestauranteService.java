@@ -6,13 +6,16 @@ import br.com.primeiraparte.domain.exception.EntidadeEmUsoException;
 import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
 import br.com.primeiraparte.domain.repository.CozinhaRepository;
 import br.com.primeiraparte.domain.repository.RestauranteRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -95,10 +98,21 @@ public class RestauranteService {
         return this.atualizar(id, restauranteAtual);
     }
 
-    private static void merge(Map<String, Object> campos, Restaurante restauranteAtual) {
-        campos.forEach((key, value) -> {
+    private static void merge(Map<String, Object> dadosOrigem, Restaurante resrauranteDestino) {
+        //converte json em java
+        ObjectMapper mapper = new ObjectMapper();
+        // cria uma instancia do tipo restaurante com base nos dados de origem
+        Restaurante restauranteOrigem = mapper.convertValue(dadosOrigem, Restaurante.class);
 
+        dadosOrigem.forEach((key, value) -> {
+            // pega a chave e procura a sua equivalência na entidade Restaurante
+            Field field = ReflectionUtils.findField(Restaurante.class, key);
+            // Na entidade as propriedades são privadas, precisamos desativar isso para poder preencher aqui
+            field.setAccessible(true);
+
+            Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
             System.out.println(key+ " : " + value);
+            ReflectionUtils.setField(field, resrauranteDestino, novoValor);
         });
     }
 }
