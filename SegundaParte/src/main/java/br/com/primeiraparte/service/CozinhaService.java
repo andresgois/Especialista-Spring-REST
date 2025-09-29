@@ -22,7 +22,7 @@ public class CozinhaService {
     }
 
     public List<Cozinha> buscarPorNome(String nome) {
-        return cozinhasRepository.findCozinhaByNomeLike(nome);
+        return cozinhasRepository.findCozinhaByNomeContaining(nome);
     }
 
     public Cozinha buscar(Long id) {

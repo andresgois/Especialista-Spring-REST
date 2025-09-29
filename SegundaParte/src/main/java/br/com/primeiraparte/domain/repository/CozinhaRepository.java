@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface CozinhaRepository extends JpaRepository<Cozinha, Long> {
-    List<Cozinha> findCozinhaByNomeLike(String nome);
+    List<Cozinha> findCozinhaByNomeContaining(String nome);
 }
