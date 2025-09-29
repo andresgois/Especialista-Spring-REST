@@ -39,4 +39,12 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
         manager.remove(cozinha);
     }
 
+    @Override
+    public List<Cozinha> buscar(String nome) {
+        List<Cozinha>  cozinha = manager.createQuery("from Cozinha where upper(nome) like upper(:nome) ")
+                .setParameter("nome", "%" + nome.toUpperCase() + "%")
+                .getResultList();
+        return cozinha;
+    }
+
 }
