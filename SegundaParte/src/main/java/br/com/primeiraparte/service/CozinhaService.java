@@ -21,6 +21,10 @@ public class CozinhaService {
         return cozinhasRepository.findAll();
     }
 
+    public List<Cozinha> buscarPorNome(String nome) {
+        return cozinhasRepository.findCozinhaByNomeLike(nome);
+    }
+
     public Cozinha buscar(Long id) {
         return cozinhasRepository.findById(id).orElse(null);
     }

@@ -30,6 +30,11 @@ public class CozinhaController {
         return cozinhaService.listar();
     }
 
+    @GetMapping("por-nome")
+    public List<Cozinha> buscarPorNome(@RequestParam("nome") String nome) {
+        return cozinhaService.buscarPorNome(nome);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Cozinha> buscar(@PathVariable Long id) {
         Cozinha cozinha = cozinhaService.buscar(id);
@@ -56,16 +61,6 @@ public class CozinhaController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
-        /*try {
-            Cozinha cozinha = cozinhaService.buscar(id);
-            if(cozinha == null)
-                return ResponseEntity.notFound().build();
-            cozinhaService.deletar(cozinha.getId());
-        } catch (DataIntegrityViolationException e) {
-            //return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-        return ResponseEntity.noContent().build();*/
         try {
             cozinhaService.deletar(id);
             return ResponseEntity.noContent().build();
