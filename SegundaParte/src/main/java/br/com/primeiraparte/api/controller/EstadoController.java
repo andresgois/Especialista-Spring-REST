@@ -1,6 +1,6 @@
 package br.com.primeiraparte.api.controller;
 
-import br.com.primeiraparte.domain.EntityXml.EstadoList;
+
 import br.com.primeiraparte.domain.entity.Cozinha;
 import br.com.primeiraparte.domain.entity.Estado;
 import br.com.primeiraparte.domain.exception.EntidadeEmUsoException;
@@ -29,13 +29,6 @@ public class EstadoController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Estado> listar() {
         return estadoService.listar();
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-    public EstadoList listarXml() {
-        List<Estado> lista = new ArrayList<>();
-        return new EstadoList(estadoService.listar());
     }
 
     @GetMapping(value = "/{id}")

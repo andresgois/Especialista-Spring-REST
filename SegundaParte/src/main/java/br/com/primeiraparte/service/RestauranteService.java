@@ -28,53 +28,53 @@ public class RestauranteService {
     private CozinhaRepository cozinhaRepository;
 
     public List<Restaurante> listar() {
-        return restauranteRepository.listar();
+        return restauranteRepository.findAll();
     }
 
     public Restaurante buscar(Long id) {
-        return restauranteRepository.buscar(id);
+        return restauranteRepository.findById(id).orElse(null);
     }
 
     public Restaurante salvar(Restaurante restaurante) {
         Long id = restaurante.getCozinha().getId();
-        Cozinha cozinha = cozinhaRepository.buscar(id);
+        Cozinha cozinha = cozinhaRepository.findById(id).orElse(null);
         if(cozinha == null) {
             throw new EntidadeNaoEncontrada(
                     String.format("Não existe cadastro da Restaurante de código %d", id)
             );
         }
         restaurante.setCozinha(cozinha);
-        return restauranteRepository.salvar(restaurante);
+        return restauranteRepository.save(restaurante);
     }
 
     public Restaurante adicionar(Long id,Restaurante restaurante) {
-        Restaurante restauranteAtual = restauranteRepository.buscar(id);
+        Restaurante restauranteAtual = this.buscar(id);
         if(restaurante == null)
             BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
-        return restauranteRepository.salvar(restauranteAtual);
+        return this.salvar(restauranteAtual);
     }
 
     public Restaurante atualizar(Long id,Restaurante restaurante) {
-        Restaurante restauranteAtual = restauranteRepository.buscar(id);
+        Restaurante restauranteAtual = this.buscar(id);
         if(restaurante == null)
             throw new EntidadeNaoEncontrada(
                     String.format("Não existe cadastro da Restaurante de código %d", id)
             );
-        Cozinha cozinha = cozinhaRepository.buscar(restauranteAtual.getCozinha().getId());
+        Cozinha cozinha = cozinhaRepository.findById(restauranteAtual.getCozinha().getId()).orElse(null);
         if(cozinha == null) {
             throw new EntidadeNaoEncontrada(
                     String.format("Não existe cadastro da Cozinha de código %d", id)
             );
         }
         BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
-        return restauranteRepository.salvar(restauranteAtual);
+        return this.salvar(restauranteAtual);
     }
 
     public void deletar(Long id) {
         Restaurante restaurante = null;
         try {
-            restaurante = restauranteRepository.buscar(id);
-            restauranteRepository.remover(restaurante);
+            restaurante = this.buscar(id);
+            restauranteRepository.delete(restaurante);
         } catch (EmptyResultDataAccessException e) {
             throw new EntidadeNaoEncontrada(
                     String.format("Não existe cadastro da Restaurante de código %d", id)
@@ -87,14 +87,14 @@ public class RestauranteService {
     }
 
     public Restaurante atualizarPacial(Long id, Map<String, Object> campos) {
-        Restaurante restauranteAtual = restauranteRepository.buscar(id);
+        Restaurante restauranteAtual = restauranteRepository.findById(id).orElse(null);
 
         if(restauranteAtual == null)
             throw new EntidadeNaoEncontrada(
                     String.format("Não existe cadastro da Restaurante de código %d", id)
             );
         merge(campos, restauranteAtual);
-        Cozinha cozinha = cozinhaRepository.buscar(restauranteAtual.getCozinha().getId());
+        Cozinha cozinha = cozinhaRepository.findById(restauranteAtual.getCozinha().getId()).orElse(null);
         return this.atualizar(id, restauranteAtual);
     }
 

@@ -18,29 +18,29 @@ public class EstadoService {
     private EstadoRepository estadosRepository;
 
     public List<Estado> listar() {
-        return estadosRepository.listar();
+        return estadosRepository.findAll();
     }
 
     public Estado buscar(Long id) {
-        return estadosRepository.buscar(id);
+        return estadosRepository.findById(id).orElse(null);
     }
 
     public Estado salvar(Estado estado) {
-        return estadosRepository.salvar(estado);
+        return estadosRepository.save(estado);
     }
 
     public Estado atualizar(Long id,Estado estado) {
-        Estado estadoAtual = estadosRepository.buscar(id);
+        Estado estadoAtual = this.buscar(id);
         if(estado != null)
             BeanUtils.copyProperties(estado, estadoAtual, "id");
-        return estadosRepository.salvar(estadoAtual);
+        return this.salvar(estadoAtual);
     }
 
     public void deletar(Long id) {
         Estado estado = null;
         try {
-            estado = estadosRepository.buscar(id);
-            estadosRepository.remover(estado);
+            estado = this.buscar(id);
+            estadosRepository.delete(estado);
         } catch (EmptyResultDataAccessException e) {
             throw new EntidadeNaoEncontrada(
                     String.format("Não existe cadastro da Estado de código %d", id)

@@ -18,29 +18,29 @@ public class CozinhaService {
     private CozinhaRepository cozinhasRepository;
 
     public List<Cozinha> listar() {
-        return cozinhasRepository.listar();
+        return cozinhasRepository.findAll();
     }
 
     public Cozinha buscar(Long id) {
-        return cozinhasRepository.buscar(id);
+        return cozinhasRepository.findById(id).orElse(null);
     }
 
     public Cozinha salvar(Cozinha cozinha) {
-        return cozinhasRepository.salvar(cozinha);
+        return cozinhasRepository.save(cozinha);
     }
 
     public Cozinha adicionar(Long id,Cozinha cozinha) {
-        Cozinha cozinhaAtual = cozinhasRepository.buscar(id);
+        Cozinha cozinhaAtual = this.buscar(id);
         if(cozinha == null)
             BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-        return cozinhasRepository.salvar(cozinhaAtual);
+        return this.salvar(cozinhaAtual);
     }
 
     public void deletar(Long id) {
         Cozinha cozinha = null;
         try {
-            cozinha = cozinhasRepository.buscar(id);
-            cozinhasRepository.remover(cozinha);
+            cozinha = this.buscar(id);
+            cozinhasRepository.delete(cozinha);
         } catch (EmptyResultDataAccessException e) {
             throw new EntidadeNaoEncontrada(
                     String.format("Não existe cadastro da Cozinha de código %d", id)
