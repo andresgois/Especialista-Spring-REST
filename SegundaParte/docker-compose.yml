@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17.3
+    container_name: postgres17
+    restart: always
+    environment:
+      POSTGRES_USER: andre
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: db_processos
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      #- ./docker/init:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:
