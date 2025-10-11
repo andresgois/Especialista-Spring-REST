@@ -122,6 +122,6 @@ public class RestauranteService {
     }
 
     public List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
-        restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
+        return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
     }
 }
