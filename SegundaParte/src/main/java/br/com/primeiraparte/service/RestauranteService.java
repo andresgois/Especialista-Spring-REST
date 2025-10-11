@@ -6,6 +6,8 @@ import br.com.primeiraparte.domain.exception.EntidadeEmUsoException;
 import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
 import br.com.primeiraparte.domain.repository.CozinhaRepository;
 import br.com.primeiraparte.domain.repository.RestauranteRepository;
+import br.com.primeiraparte.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
+import br.com.primeiraparte.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,5 +125,12 @@ public class RestauranteService {
 
     public List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
         return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
+    }
+
+    public List<Restaurante> findAll(String nome) {
+        var comFreteGratis = new RestauranteComFreteGratisSpec();
+        var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
+
+        return restauranteRepository.findAll(comFreteGratis.and(comNomeSemelhante));
     }
 }

@@ -3,6 +3,8 @@ package br.com.primeiraparte.api.controller;
 import br.com.primeiraparte.domain.entity.Restaurante;
 import br.com.primeiraparte.domain.exception.EntidadeEmUsoException;
 import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
+import br.com.primeiraparte.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
+import br.com.primeiraparte.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 import br.com.primeiraparte.service.RestauranteService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,5 +100,14 @@ public class RestauranteController {
     public List<Restaurante> restaurantesPorNomeFrete(String nome,
                                                       BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
         return restauranteService.find(nome, taxaFreteInicial, taxaFreteFinal);
+    }
+
+    @GetMapping("/restaurantes/com-frete-gratis")
+    public List<Restaurante> restaurantesComFreteGratis(String nome) {
+        //var comFreteGratis = new RestauranteComFreteGratisSpec();
+        //var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
+
+        //return restauranteService.findAll(comFreteGratis.and(comNomeSemelhante));
+        return restauranteService.findAll(nome);
     }
 }
