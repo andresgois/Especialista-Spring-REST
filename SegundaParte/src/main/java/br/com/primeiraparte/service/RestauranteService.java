@@ -115,4 +115,8 @@ public class RestauranteService {
             ReflectionUtils.setField(field, resrauranteDestino, novoValor);
         });
     }
+
+    public List<Restaurante> consultarPorNome(String nome,String conzinnhaId) {
+        return restauranteRepository.consultarPorNome(nome, conzinnhaId);
+    }
 }

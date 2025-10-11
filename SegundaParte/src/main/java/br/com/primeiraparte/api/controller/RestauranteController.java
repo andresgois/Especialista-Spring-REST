@@ -87,4 +87,9 @@ public class RestauranteController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/por-nome")
+    public ResponseEntity<List<Restaurante>> consultarPorNome(@RequestParam("nome") String nome, @RequestParam("id") String id) {
+        return ResponseEntity.ok(restauranteService.consultarPorNome(nome, id));
+    }
 }
