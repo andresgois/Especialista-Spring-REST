@@ -1,19 +1,17 @@
 package br.com.primeiraparte.service;
 
+import static br.com.primeiraparte.infrastructure.repository.spec.RestauranteSpecs.*;
 import br.com.primeiraparte.domain.entity.Cozinha;
 import br.com.primeiraparte.domain.entity.Restaurante;
 import br.com.primeiraparte.domain.exception.EntidadeEmUsoException;
 import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
 import br.com.primeiraparte.domain.repository.CozinhaRepository;
 import br.com.primeiraparte.domain.repository.RestauranteRepository;
-import br.com.primeiraparte.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
-import br.com.primeiraparte.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -21,6 +19,9 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+
+import static br.com.primeiraparte.infrastructure.repository.spec.RestauranteSpecs.comFreteGratis;
+import static br.com.primeiraparte.infrastructure.repository.spec.RestauranteSpecs.comNomeSemelhante;
 
 @Service
 public class RestauranteService {
@@ -128,9 +129,11 @@ public class RestauranteService {
     }
 
     public List<Restaurante> findAll(String nome) {
-        var comFreteGratis = new RestauranteComFreteGratisSpec();
+        /*var comFreteGratis = new RestauranteComFreteGratisSpec();
         var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
 
-        return restauranteRepository.findAll(comFreteGratis.and(comNomeSemelhante));
+        return restauranteRepository.findAll(comFreteGratis.and(comNomeSemelhante));*/
+        return restauranteRepository.findAll(comFreteGratis()
+                .and(comNomeSemelhante(nome)));
     }
 }
