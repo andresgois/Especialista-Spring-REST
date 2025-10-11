@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -91,5 +92,11 @@ public class RestauranteController {
     @GetMapping("/por-nome")
     public ResponseEntity<List<Restaurante>> consultarPorNome(@RequestParam("nome") String nome, @RequestParam("id") String id) {
         return ResponseEntity.ok(restauranteService.consultarPorNome(nome, id));
+    }
+
+    @GetMapping("/restaurantes/por-nome-e-frete")
+    public List<Restaurante> restaurantesPorNomeFrete(String nome,
+                                                      BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+        return restauranteService.find(nome, taxaFreteInicial, taxaFreteFinal);
     }
 }

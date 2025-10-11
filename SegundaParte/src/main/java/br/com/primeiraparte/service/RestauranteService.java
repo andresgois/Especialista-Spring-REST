@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -118,5 +119,9 @@ public class RestauranteService {
 
     public List<Restaurante> consultarPorNome(String nome,String conzinnhaId) {
         return restauranteRepository.consultarPorNome(nome, conzinnhaId);
+    }
+
+    public List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+        restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
     }
 }
