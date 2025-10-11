@@ -1,20 +1,22 @@
 package br.com.primeiraparte.infrastructure.repository;
 
+import static br.com.primeiraparte.infrastructure.repository.spec.RestauranteSpecs.*;
 import br.com.primeiraparte.domain.entity.Restaurante;
+import br.com.primeiraparte.domain.repository.RestauranteRepository;
 import br.com.primeiraparte.domain.repository.RestauranteRepositoryQueries;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -23,6 +25,8 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
     @PersistenceContext
     private EntityManager manager;
 
+    @Autowired @Lazy// evita erro de reduncia ciclica, só será chamado quando realmente precisar!
+    private RestauranteRepository  repository;
     // 1 forma
     /*@Override
     public List<Restaurante> find(String nome,
@@ -98,6 +102,12 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
         var query = manager.createQuery(criteria);
         return query.getResultList();
+    }
+
+    @Override
+    public List<Restaurante> findComFreteGratis(String nome) {
+        return repository.findAll(comFreteGratis()
+                .and(comNomeSemelhante(nome)));
     }
 
 }
