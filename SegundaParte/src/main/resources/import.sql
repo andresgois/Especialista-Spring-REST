@@ -36,3 +36,7 @@ INSERT INTO tb_estado (nome) VALUES ('Santa Catarina');
 INSERT INTO tb_estado (nome) VALUES ('São Paulo');
 INSERT INTO tb_estado (nome) VALUES ('Sergipe');
 INSERT INTO tb_estado (nome) VALUES ('Tocantins');
+
+INSERT INTO db_processo.tb_forma_pagamento (descricao) VALUES ('Cartão de crédito'), ('Cartão de débito'), ('Dinheiro');
+
+INSERT INTO db_processo.restaurante_forma_pagamento (forma_pagamento_id, restaurante_id) VALUES (1,1),(1,2),(1,3),(2,1),(1,2),(2,3),(3,1),(3,2);
