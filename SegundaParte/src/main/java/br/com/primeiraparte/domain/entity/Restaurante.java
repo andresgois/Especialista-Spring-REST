@@ -55,4 +55,7 @@ public class Restaurante {
     @Column(nullable = false)
     private LocalDateTime dataAtualizacao;
 
+    @OneToMany
+    private List<Produto> produtos;
+
 }
