@@ -2,6 +2,7 @@ package br.com.primeiraparte.domain.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,7 +31,9 @@ public class Restaurante {
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
-    @ManyToOne
+    //@JsonIgnore
+    //@JsonIgnoreProperties({"hibernateLazyInitializer"})// ignora porpriedades dentro de cozinha
+    @ManyToOne//(fetch = FetchType.LAZY) // tudo que termina com ToMany é EAGHER
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
 
@@ -55,7 +58,8 @@ public class Restaurante {
     @Column(nullable = false)
     private LocalDateTime dataAtualizacao;
 
-    @OneToMany
+    @JsonIgnore// se deixar sem ele faz 1 consulta a +
+    @OneToMany // tudo que termina com ToMany é LAZY
     private List<Produto> produtos;
 
 }
