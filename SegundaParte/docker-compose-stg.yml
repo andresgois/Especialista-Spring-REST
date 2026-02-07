@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db_processo
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: db_processo
+      MYSQL_USER: andre
+      MYSQL_PASSWORD: 123456
+
+#docker run -d  --name mysql-db_processo -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root123 -e MYSQL_DATABASE=db_processo -e MYSQL_USER=andre -e MYSQL_PASSWORD=123456 mysql:8.0
+#docker logs -f mysql-db_processo
+#docker exec -it mysql-db_processo mysql -u andre -p
+
+#docker compose -f docker-compose-stg.yml up -d
+#docker compose -f docker-compose-stg.yml logs -f
