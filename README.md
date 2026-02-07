@@ -22,3 +22,14 @@ spring.flyway.baseline-version=1
 outra solução é criar a tabela de migração manualmente:
 DROP DATABASE db_processo;
 CREATE DATABASE db_processo;
+
+## Quando uma migration do flyway falha, o que fazer?
+- Verificar o erro específico no log para entender o motivo da falha.
+- Corrigir o erro no script de migração (por exemplo, corrigir a sintaxe SQL ou ajustar a lógica).
+- Se necessário, limpar o estado do banco de dados para permitir uma nova tentativa de migração (por exemplo, excluir a tabela de migração ou restaurar o banco de dados para um estado anterior).
+- Reexecutar a migração para garantir que o problema foi resolvido.
+- deletar o registro da tabela de migração para a versão que falhou, para permitir uma nova tentativa de migração.
+- outra forma é criar o arquivo flyway.properties e configurar o flyway para ignorar a versão que falhou:
+- flyway.ignoreMissingMigrations=true
+- digitar o seguinte comando:
+  - ./mvnw flyway:repair -Dflyway.configFiles=src/main/resources/flyway.properties
