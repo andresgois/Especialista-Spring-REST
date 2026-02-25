@@ -1,11 +1,10 @@
 package br.com.primeiraparte.domain.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.lang.Nullable;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 //@ResponseStatus(HttpStatus.NOT_FOUND)
+/*
 public class EntidadeNaoEncontrada extends ResponseStatusException {
 
     public EntidadeNaoEncontrada(HttpStatusCode status, @Nullable String mensagem) {
@@ -16,3 +15,12 @@ public class EntidadeNaoEncontrada extends ResponseStatusException {
         this(HttpStatus.NOT_FOUND, message);
     }
 }
+*/
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class EntidadeNaoEncontrada extends RuntimeException {
+
+    public EntidadeNaoEncontrada(String message) {
+        super(message);
+    }
+}
+
