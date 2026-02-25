@@ -1,16 +1,9 @@
 package br.com.primeiraparte.api.controller;
 
 import br.com.primeiraparte.domain.entity.Cozinha;
-import br.com.primeiraparte.domain.exception.EntidadeEmUsoException;
-import br.com.primeiraparte.domain.exception.EntidadeNaoEncontrada;
-import br.com.primeiraparte.domain.repository.CozinhaRepository;
 import br.com.primeiraparte.service.CozinhaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -59,7 +52,7 @@ public class CozinhaController {
         return ResponseEntity.ok(cozinhaAtual);
     }
 
-    @DeleteMapping(value = "/{id}")
+    /*@DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         try {
             cozinhaService.deletar(id);
@@ -69,5 +62,9 @@ public class CozinhaController {
         } catch (EntidadeEmUsoException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+    }*/
+    @DeleteMapping(value = "/{id}")
+    public void deletar(@PathVariable Long id) {
+        cozinhaService.deletar(id);
     }
 }

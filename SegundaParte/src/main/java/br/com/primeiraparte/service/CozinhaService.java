@@ -40,12 +40,25 @@ public class CozinhaService {
         return this.salvar(cozinhaAtual);
     }
 
-    public void deletar(Long id) {
+    /*public void deletar(Long id) {
         Cozinha cozinha = null;
         try {
-            //cozinha = this.buscar(id);
+            cozinha = this.buscar(id);
+            ozinhasRepository.delete(cozinha);
+        } catch (EmptyResultDataAccessException e) {
+            throw new EntidadeNaoEncontrada(
+                    String.format("Não existe cadastro da Cozinha de código %d", id)
+            );
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(
+                    String.format("Cozinha de código %d não pode ser removida, pois está em uso", id)
+            );
+        }
+    }*/
+
+    public void deletar(Long id) {
+        try {
             cozinhasRepository.deleteById(id);
-            //cozinhasRepository.delete(cozinha);
         } catch (EmptyResultDataAccessException e) {
             throw new EntidadeNaoEncontrada(
                     String.format("Não existe cadastro da Cozinha de código %d", id)
@@ -57,3 +70,4 @@ public class CozinhaService {
         }
     }
 }
+
