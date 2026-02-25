@@ -23,9 +23,9 @@ create table tb_pedido (
 
     primary key (id),
 
-    constraint fk_pedido_restaurante foreign key (restaurante_id) references restaurante (id),
-    constraint fk_pedido_usuario_cliente foreign key (usuario_cliente_id) references usuario (id),
-    constraint fk_pedido_forma_pagamento foreign key (forma_pagamento_id) references forma_pagamento (id)
+    constraint fk_pedido_restaurante foreign key (restaurante_id) references tb_restaurante (id),
+    constraint fk_pedido_usuario_cliente foreign key (usuario_cliente_id) references tb_usuario (id),
+    constraint fk_pedido_forma_pagamento foreign key (forma_pagamento_id) references tb_forma_pagamento (id)
 ) engine=InnoDB default charset=utf8;
 
 create table tb_item_pedido (
@@ -40,6 +40,6 @@ create table tb_item_pedido (
      primary key (id),
      unique key uk_item_pedido_produto (pedido_id, produto_id),
 
-     constraint fk_item_pedido_pedido foreign key (pedido_id) references pedido (id),
-     constraint fk_item_pedido_produto foreign key (produto_id) references produto (id)
+     constraint fk_item_pedido_pedido foreign key (pedido_id) references tb_pedido (id),
+     constraint fk_item_pedido_produto foreign key (produto_id) references tb_produto (id)
 ) engine=InnoDB default charset=utf8;

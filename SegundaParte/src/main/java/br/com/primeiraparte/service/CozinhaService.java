@@ -43,8 +43,9 @@ public class CozinhaService {
     public void deletar(Long id) {
         Cozinha cozinha = null;
         try {
-            cozinha = this.buscar(id);
-            cozinhasRepository.delete(cozinha);
+            //cozinha = this.buscar(id);
+            cozinhasRepository.deleteById(id);
+            //cozinhasRepository.delete(cozinha);
         } catch (EmptyResultDataAccessException e) {
             throw new EntidadeNaoEncontrada(
                     String.format("Não existe cadastro da Cozinha de código %d", id)
